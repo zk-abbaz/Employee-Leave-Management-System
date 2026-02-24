@@ -1,0 +1,2 @@
+ID,employee_ID,leaveTypes_ID,startDate,endDate,reason,days,status
+5f4d6e7a-1234-4abc-8def-000000000020,5f4d6e7a-1234-4abc-8def-000000000011,5f4d6e7a-1234-4abc-8def-000000000001,2025-03-01,2025-03-05,Family vacation,5,P

@@ -1,0 +1,110 @@
+# In the following requests the variable baseUrl is used.
+# Its value is set here.
+@baseUrl = http://localhost:4004
+
+
+### ------------------------------------------------------------------------
+# Get Service Document
+GET {{baseUrl}}/admin
+
+
+### ------------------------------------------------------------------------
+# Get used days
+GET {{baseUrl}}/hr/Employees(5f4d6e7a-1234-4abc-8def-000000000011)
+
+
+### ------------------------------------------------------------------------
+# Get leave request
+GET {{baseUrl}}/hr/LeaveRequests(5f4d6e7a-1234-4abc-8def-000000000020)
+
+### ------------------------------------------------------------------------
+# Create a new author, then update it and finally delete it again
+# @name createNewAuthor
+
+
+POST http://localhost:4004/hr/LeaveRequests(5f4d6e7a-1234-4abc-8def-000000000020)/rejectRequest
+Content-Type: application/json
+
+{
+  "reviewNotes": "Rejected by manager"
+}
+
+### Test 1 - Past start date (should fail with 400)
+POST http://localhost:4004/hr/LeaveRequests
+Content-Type: application/json
+
+{
+  "employee_ID": "5f4d6e7a-1234-4abc-8def-000000000011",
+  "leaveTypes_ID": "5f4d6e7a-1234-4abc-8def-000000000001",
+  "startDate": "2024-01-01",
+  "endDate": "2024-01-05",
+  "reason": "Test past date",
+  "days": 25
+}
+
+###
+
+### Test 2 - Valid future date (should succeed with 201)
+POST http://localhost:4004/hr/LeaveRequests
+Content-Type: application/json
+
+{
+  "employee_ID": "5f4d6e7a-1234-4abc-8def-000000000011",
+  "leaveTypes_ID": "5f4d6e7a-1234-4abc-8def-000000000001",
+  "startDate": "2026-06-01",
+  "endDate": "2026-06-05",
+  "reason": "Summer vacation",
+  "days": 5
+}
+
+###
+POST http://localhost:4004/hr/LeaveRequests(5f4d6e7a-1234-4abc-8def-000000000020)/approve
+Content-Type: application/json
+
+{
+  "reviewNotes": "Approved"
+}
+### Test 3 - Delete approved/rejected request (should fail with 400)
+### First approve the seeded request, then try to delete it
+DELETE http://localhost:4004/hr/LeaveRequests(5f4d6e7a-1234-4abc-8def-000000000020)
+
+### Test - Insufficient balance (should fail with 400)
+POST http://localhost:4004/hr/LeaveRequests
+Content-Type: application/json
+
+{
+  "employee_ID": "5f4d6e7a-1234-4abc-8def-000000000011",
+  "leaveTypes_ID": "5f4d6e7a-1234-4abc-8def-000000000001",
+  "startDate": "2026-07-01",
+  "endDate": "2026-07-25",
+  "reason": "Long vacation",
+  "days": 25
+}
+
+### Test 1 - Create first request (should succeed)
+POST http://localhost:4004/hr/LeaveRequests
+Content-Type: application/json
+
+{
+  "employee_ID": "5f4d6e7a-1234-4abc-8def-000000000011",
+  "leaveTypes_ID": "5f4d6e7a-1234-4abc-8def-000000000001",
+  "startDate": "2026-08-01",
+  "endDate": "2026-08-05",
+  "reason": "Summer vacation",
+  "days": 5
+}
+
+###
+
+### Test 2 - Overlapping request (should fail with 400)
+POST http://localhost:4004/hr/LeaveRequests
+Content-Type: application/json
+
+{
+  "employee_ID": "5f4d6e7a-1234-4abc-8def-000000000011",
+  "leaveTypes_ID": "5f4d6e7a-1234-4abc-8def-000000000001",
+  "startDate": "2026-08-03",
+  "endDate": "2026-08-07",
+  "reason": "Another vacation",
+  "days": 5
+}
