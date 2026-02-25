@@ -9,6 +9,7 @@ entity Employees: cuid, managed {
     manager: Association to Employees;
     entitlement: Integer default 20;
     usedDays : Integer default 0;
+    leaveRequests: Association to many LeaveRequests on leaveRequests.employee = $self;
 } 
 
 entity LeaveTypes: cuid {
@@ -27,8 +28,8 @@ entity LeaveRequests: cuid, managed {
         pending = 'P';
         approved = 'A';
         rejected = 'R';  
-    } default 'P';
-    reviewedBy : String(100);
-    reviewedAt : DateTime;
-    reviewNotes : String(500);
+    } default 'P'; 
+    reviewedBy : String(100) @readonly;
+    reviewedAt : DateTime @readonly;
+    reviewNotes : String(500) @readonly;
 }

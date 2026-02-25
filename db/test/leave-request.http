@@ -108,3 +108,55 @@ Content-Type: application/json
   "reason": "Another vacation",
   "days": 5
 }
+
+### Get my profile
+GET http://localhost:4004/emp/MyProfile
+
+###
+
+### Get my requests
+GET http://localhost:4004/emp/MyRequests
+
+###
+
+### Submit a valid leave request
+POST http://localhost:4004/emp/MyRequests
+Content-Type: application/json
+
+{
+  "employee_ID": "5f4d6e7a-1234-4abc-8def-000000000011",
+  "leaveTypes_ID": "5f4d6e7a-1234-4abc-8def-000000000001",
+  "startDate": "2026-09-01",
+  "endDate": "2026-09-05",
+  "reason": "Holiday",
+  "days": 5
+}
+
+###
+
+### Submit with past date (should fail)
+POST http://localhost:4004/emp/MyRequests
+Content-Type: application/json
+
+{
+  "employee_ID": "5f4d6e7a-1234-4abc-8def-000000000011",
+  "leaveTypes_ID": "5f4d6e7a-1234-4abc-8def-000000000001",
+  "startDate": "2024-01-01",
+  "endDate": "2024-01-05",
+  "reason": "Past date test",
+  "days": 5
+}
+
+### 
+
+POST http://localhost:4004/emp/MyRequests
+Content-Type: application/json
+
+{
+  "employee_ID": "5f4d6e7a-1234-4abc-8def-000000000011",
+  "leaveTypes_ID": "5f4d6e7a-1234-4abc-8def-000000000001",
+  "startDate": "2026-10-01",
+  "endDate": "2026-10-05",
+  "reason": "Holiday",
+  "days": 5
+}
