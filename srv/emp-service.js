@@ -26,15 +26,15 @@ class EmployeeService extends cds.ApplicationService {
         return super.init();
     }
 
- async scopeProfile(req) {
-        // only return the employee record that matches the logged-in user
-        req.query.where({ ID: req.user.id });
-    }
+//  async scopeProfile(req) {
+//         // only return the employee record that matches the logged-in user
+//         req.query.where({ ID: req.user.id });
+//     }
 
-    async scopeRequests(req) {
-        // only return leave requests belonging to the logged-in user
-        req.query.where({ employee_ID: req.user.id });
-    }
+//     async scopeRequests(req) {
+//         // only return leave requests belonging to the logged-in user
+//         req.query.where({ employee_ID: req.user.id });
+//     }
 }
 
 module.exports = EmployeeService;
