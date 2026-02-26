@@ -5,27 +5,27 @@ annotate service.Employees with @(
         Data : [
             {
                 $Type : 'UI.DataField',
-                Label : 'name',
+                Label : 'Name',
                 Value : name,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'email',
+                Label : 'Email',
                 Value : email,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'department',
+                Label : 'Department',
                 Value : department,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'entitlement',
+                Label : 'Entitlement',
                 Value : entitlement,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'usedDays',
+                Label : 'Used Days',
                 Value : usedDays,
             },
         ],
@@ -47,27 +47,27 @@ annotate service.Employees with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'name',
+            Label : 'Name',
             Value : name,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'email',
+            Label : 'Email',
             Value : email,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'department',
+            Label : 'Department',
             Value : department,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'entitlement',
+            Label : 'Entitlement',
             Value : entitlement,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'usedDays',
+            Label : 'Used Days',
             Value : usedDays,
         },
     ],
@@ -226,27 +226,29 @@ annotate service.LeaveRequests with @(
         {
             $Type : 'UI.DataField',
             Value : startDate,
-            Label : 'startDate',
+            Label : 'Start Date',
         },
         {
             $Type : 'UI.DataField',
             Value : days,
-            Label : 'days',
+            Label : 'Days',
         },
         {
             $Type : 'UI.DataField',
             Value : endDate,
-            Label : 'endDate',
+            Label : 'End Date',
         },
         {
             $Type : 'UI.DataField',
             Value : reason,
-            Label : 'reason',
+            Label : 'Reason',
         },
         {
             $Type : 'UI.DataField',
-            Value : status,
-            Label : 'status',
+            Value : status_code,
+            Label : 'Status',
+            Criticality : status.criticality,
+            CriticalityRepresentation : #WithIcon,
         },
     ],
     UI.Facets : [
@@ -269,22 +271,24 @@ annotate service.LeaveRequests with @(
             {
                 $Type : 'UI.DataField',
                 Value : days,
-                Label : 'days',
+                Label : 'Days',
             },
             {
                 $Type : 'UI.DataField',
                 Value : startDate,
-                Label : 'startDate',
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : status,
-                Label : 'status',
+                Label : 'Start Date',
             },
             {
                 $Type : 'UI.DataField',
                 Value : reason,
-                Label : 'reason',
+                Label : 'Reason',
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : status_code,
+                Label : 'Status',
+                Criticality : status.criticality,
+                CriticalityRepresentation : #WithIcon,
             },
         ],
     },
@@ -294,17 +298,17 @@ annotate service.LeaveRequests with @(
             {
                 $Type : 'UI.DataField',
                 Value : reviewedAt,
-                Label : 'reviewedAt',
+                Label : 'Reviewed At',
             },
             {
                 $Type : 'UI.DataField',
                 Value : reviewedBy,
-                Label : 'reviewedBy',
+                Label : 'Reviewed By',
             },
             {
                 $Type : 'UI.DataField',
                 Value : reviewNotes,
-                Label : 'reviewNotes',
+                Label : 'Review Notes',
             },
         ],
     },
@@ -312,7 +316,7 @@ annotate service.LeaveRequests with @(
         {
             $Type : 'UI.DataFieldForAction',
             Action : 'HRService.approve',
-            Label : 'Approve @rea',
+            Label : 'Approve',
         },
         {
             $Type : 'UI.DataFieldForAction',
@@ -321,4 +325,31 @@ annotate service.LeaveRequests with @(
         },
     ],
 );
+
+annotate service.LeaveRequests with {
+    status @(
+        Common.Text : status.displayText,
+        Common.Text.@UI.TextArrangement : #TextOnly,
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'LeaveStatus',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : status_code,
+                    ValueListProperty : 'code',
+                },
+            ],
+        },
+        Common.ValueListWithFixedValues : true,
+    )
+};
+
+annotate service.LeaveStatus with {
+    displayText @Common.Text : code
+};
+
+annotate service.LeaveStatus with {
+    code @Common.Text : displayText
+};
 

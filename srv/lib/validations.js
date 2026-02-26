@@ -50,4 +50,20 @@
         }
     }
 
-    module.exports = { validateDate, validateBalance, checkOverlap };
+    const calculateDays = async (req) => {
+        const {startDate, endDate} = req.data;
+
+        if(!startDate || !endDate) return;
+
+        if(startDate > endDate) {
+            return req.error(400, 'Start date cannot be greater than end date');
+        }
+
+        const start = new Date (startDate);
+        const end = new Date (endDate);
+        const days = Math.ceil((end - start ) / (1000 * 60 * 60 *24)) + 1;
+
+        req.data.days = days;
+    }
+
+    module.exports = { validateDate, validateBalance, checkOverlap, calculateDays };

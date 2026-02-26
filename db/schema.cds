@@ -2,6 +2,7 @@ namespace com.sap.learning;
 
 using { cuid, managed, sap.common.CodeList} from '@sap/cds/common';
 
+
 entity Employees: cuid, managed {
     name : String;
     email : String;
@@ -24,12 +25,18 @@ entity LeaveRequests: cuid, managed {
     endDate : Date;
     reason : String(50);
     days : Integer;
-    status : String(1) enum {
-        pending = 'P';
-        approved = 'A';
-        rejected = 'R';  
-    } default 'P'; 
+    status : Association to LeaveStatus default 'P';
     reviewedBy : String(100) @readonly;
     reviewedAt : DateTime @readonly;
     reviewNotes : String(500) @readonly;
+}
+
+entity LeaveStatus {
+    key code    : String(1) enum {
+        pending  = 'P';
+        approved = 'A';
+        rejected = 'R';
+    };
+    criticality : Integer;
+    displayText : String;
 }

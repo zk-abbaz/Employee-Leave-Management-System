@@ -1,4 +1,4 @@
-ID,employee_ID,leaveTypes_ID,startDate,endDate,reason,days,status
+ID,employee_ID,leaveTypes_ID,startDate,endDate,reason,days,status_code
 5f4d6e7a-1234-4abc-8def-000000000020,5f4d6e7a-1234-4abc-8def-000000000011,5f4d6e7a-1234-4abc-8def-000000000001,2026-03-01,2026-03-05,Family vacation,5,P
 5f4d6e7a-1234-4abc-8def-000000000021,5f4d6e7a-1234-4abc-8def-000000000011,5f4d6e7a-1234-4abc-8def-000000000002,2026-04-10,2026-04-11,Feeling unwell,2,A
 5f4d6e7a-1234-4abc-8def-000000000022,5f4d6e7a-1234-4abc-8def-000000000011,5f4d6e7a-1234-4abc-8def-000000000001,2026-05-20,2026-05-22,Personal errand,3,R

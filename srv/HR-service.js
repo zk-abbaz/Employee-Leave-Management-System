@@ -20,10 +20,10 @@ init() {
 
 
     async deleteRequest(req) {
-         const { LeaveRequests } = this.entities;
+        const { LeaveRequests } = this.entities;
         const { ID } = req.params[0];
         const leaveRequest = await SELECT.one.from(LeaveRequests).where({ID});
-        if(leaveRequest.status === 'A' || leaveRequest.status === 'R') {
+        if(leaveRequest.status_code === 'A' || leaveRequest.status_code === 'R') {
             return req.error(400, 'Cannot delete an approved or rejected request')
         }
     }
@@ -36,13 +36,13 @@ init() {
     const leaveRequest = await SELECT.one.from(LeaveRequests).where({ ID });
 
     // 2. Check status
-    if (leaveRequest.status !== 'P') {
+    if (leaveRequest.status_code !== 'P') {
         return req.error(400, 'Request is not in Pending status');
     }
 
     // 3. Update the leave request
     await UPDATE(LeaveRequests).where({ ID }).with({
-        status: 'A',
+        status_code: 'A',
         reviewedBy: req.user.id,
         reviewedAt: new Date(),
         reviewNotes: req.data.reviewNotes
@@ -70,7 +70,7 @@ init() {
         }
 
         await UPDATE(LeaveRequests).where({ID}).with({
-            status: 'R',
+            status_code: 'R',
             reviewedBy: req.user.id,
             reviewedAt: new Date(),
             reviewNotes: req.data.reviewNotes,

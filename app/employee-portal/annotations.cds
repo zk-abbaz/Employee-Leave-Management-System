@@ -5,33 +5,33 @@ annotate service.MyRequests with @(
         Data : [
             {
                 $Type : 'UI.DataField',
-                Label : 'startDate',
+                Label : 'Start Date',
                 Value : startDate,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'endDate',
+                Label : 'End Date',
                 Value : endDate,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'reason',
+                Label : 'Reason',
                 Value : reason,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'days',
-                Value : days,
-            },
-            {
-                $Type : 'UI.DataField',
                 Value : leaveTypes_ID,
-                Label : 'leaveTypes_ID',
+                Label : 'Leave Types ID',
             },
             {
                 $Type : 'UI.DataField',
                 Value : employee_ID,
-                Label : 'employee_ID',
+                Label : 'Employee ID',
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : days,
+                Label : 'Days',
             },
         ],
     },
@@ -46,33 +46,35 @@ annotate service.MyRequests with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'startDate',
+            Label : 'Start Date',
             Value : startDate,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'endDate',
+            Label : 'End Date',
             Value : endDate,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'reason',
+            Label : 'Reason',
             Value : reason,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'days',
+            Label : 'Days',
             Value : days,
         },
         {
             $Type : 'UI.DataField',
             Value : leaveTypes_ID,
-            Label : 'leaveTypes_ID',
+            Label : 'Leave Types ID',
+            @UI.Hidden,
         },
         {
             $Type : 'UI.DataField',
             Value : employee_ID,
-            Label : 'employee_ID',
+            Label : 'Employee ID',
+            @UI.Hidden,
         },
     ],
     UI.HeaderInfo : {
@@ -136,5 +138,9 @@ annotate service.MyRequests with {
             },
         ],
     }
+};
+
+annotate service.MyRequests with {
+    days @Common.FieldControl : #ReadOnly
 };
 

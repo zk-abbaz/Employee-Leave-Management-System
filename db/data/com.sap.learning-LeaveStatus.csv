@@ -1,0 +1,4 @@
+code,criticality,displayText
+P,2,Pending
+A,3,Approved
+R,1,Rejected
